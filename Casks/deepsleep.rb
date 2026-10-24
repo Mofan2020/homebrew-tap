@@ -16,8 +16,7 @@ cask "deepsleep" do
 
   app "Deep Sleep.app"
 
-  uninstall quit:   "com.skyc8266.deepsleep",
-            delete: "/Library/Application Support/com.skyc8266.deepsleep"
+  uninstall quit: "com.skyc8266.deepsleep"
 
   zap trash: [
     "~/Library/Application Support/com.skyc8266.deepsleep",
@@ -32,11 +31,14 @@ cask "deepsleep" do
     The app is ad-hoc signed. macOS may ask you to allow it in
     System Settings → Privacy & Security the first time you open it.
 
-    If you enabled "Full control", the privileged helper lives in
-    /Library/PrivilegedHelperTools and is owned by root, so `brew uninstall`
+    "Full control" installs a privileged helper into
+    /Library/PrivilegedHelperTools, owned by root, so `brew uninstall`
     cannot remove it without your password. Remove it from the app itself
     ("完全控制" → "停用并卸载"), or run:
 
       sudo /Applications/Deep\ Sleep.app/Contents/Resources/uninstall-helper.sh
+
+    The same applies to the hosts editor whitelist under
+    /Library/Application Support/com.skyc8266.deepsleep.
   EOS
 end
