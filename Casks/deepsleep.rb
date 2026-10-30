@@ -1,6 +1,6 @@
 cask "deepsleep" do
-  version "1.8.1"
-  sha256 "7dbd5d0e654c1f399bbdf4983f9b5c9203d92e873a1d9d979ad016ea2d9acfcc"
+  version "1.9.2"
+  sha256 "bb7099b0ca2163bd1f990d75b9c25b1764716ebea70c79b7dca03b67e43dd5b1"
 
   url "https://github.com/Mofan2020/DeepSleep/releases/download/v#{version}/DeepSleep.zip"
   name "Deep Sleep"
