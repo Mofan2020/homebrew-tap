@@ -23,7 +23,7 @@ brew install --cask deepsleep
 
 ```ruby
 tap "mofan2020/tap"
-brew "deepsleep"
+cask "deepsleep"
 ```
 
 ## 收录的 cask
