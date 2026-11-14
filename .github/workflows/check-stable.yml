@@ -1,0 +1,27 @@
+name: check stable only
+
+# 这个 tap 只跟稳定版。任何指向 pre-release 的改动都要在这里被挡住。
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: every cask must point at a stable release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/check_stable_only.py
+
+      - name: the casks must look right
+        run: |
+          brew install brew/macos/brew-lint
+          brew style Mofan2020/homebrew-tap

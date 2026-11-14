@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 cask "fastets" do
   version "1.0.10"
 

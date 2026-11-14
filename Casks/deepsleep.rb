@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 cask "deepsleep" do
-  version "1.12.0"
-  sha256 "48ba366d393f8bf8e25f52618d0f256281ba2781befbcb73bc9d0b3ce21757a9"
+  version "1.11.4"
+  sha256 "47f2404fc2ca928a83f0fd71a9eab151297cb68ae17b9a617484938dbd650887"
 
   url "https://github.com/Mofan2020/DeepSleep/releases/download/v#{version}/DeepSleep.zip"
   name "Deep Sleep"
@@ -28,6 +30,10 @@ cask "deepsleep" do
   ]
 
   caveats <<~EOS
+    This tap only ever installs a stable release. Newer versions of Deep
+    Sleep are published as pre-releases on GitHub; install those from the
+    release page if you want them.
+
     The app is ad-hoc signed. macOS may ask you to allow it in
     System Settings → Privacy & Security the first time you open it.
 

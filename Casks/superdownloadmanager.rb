@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 cask "superdownloadmanager" do
-  version "2.3.1"
-  sha256 "872e4cbb3548575ead084b9a8fe2a3e3a3d739589db66d527e505e77303526b7"
+  version "2.2.5"
+  sha256 "c660f388b30498845607c21b52e513df0fce8cf3006ff55be2f0415dcfe78378"
 
   url "https://github.com/Mofan2020/SuperDownloadManager/releases/download/v#{version}/SuperDownloadManager-macOS.zip"
   name "SuperDownloadManager"
@@ -28,6 +30,10 @@ cask "superdownloadmanager" do
   ]
 
   caveats <<~EOS
+    This tap only ever installs a stable release. Newer versions of Super
+    Download Manager are published as pre-releases on GitHub; install those
+    from the release page if you want them.
+
     The app is ad-hoc signed and not notarised. macOS may ask you to allow it
     in System Settings → Privacy & Security the first time you open it.
 

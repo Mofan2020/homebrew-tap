@@ -33,14 +33,29 @@ cask "deepsleep"
 | `deepsleep` | Deep Sleep | 睡眠与电源管理，原生 Swift，要求 macOS 26 以上 |
 | `fastets` | FastETS | 易听说（ETS100）作业助手，Apple Silicon 和 Intel 各有独立安装包 |
 | `hexoman` | HexoMan | Hexo 博客管理：站点、文章、构建、配置、Git，要求 macOS 26 以上，仅 Apple Silicon |
-| `skycmedia` | SkycMedia | B 站和网易云音乐的第三方客户端 |
+| `skycmedia` | SkycMedia | 网易云音乐的第三方客户端（稳定版那时的应用名是 NeteaseMusicDownloader） |
 | `superdownloadmanager` | SuperDownloadManager | 多线程下载管理器，仅 Apple Silicon |
 
 FastETS 和 SkycMedia 会在 Apple Silicon 与 Intel 上各取对应的包；剩下三个上游只发了 Apple Silicon 版本，Intel 机器装不了。
 
-## 预发布版本
+因为只跟稳定版，这里几个 cask 的版本号会比上游的最新版本旧不少 —— 上游发新版时先发 pre-release，正式版发布之后这个 tap 才会跟上去。
 
-HexoMan 最新的 v0.8.0 和 SkycMedia 现在所有版本，在 GitHub 上都是 pre-release。这两个 cask 跟着 pre-release 走，比正式版新，也可能有没修完的问题。`brew audit` 会因此报「是 pre-release」，这是预期内的。
+## 只跟稳定版
+
+**这个 tap 里的每一个 cask 都只指向正式发布的版本，任何 pre-release 都不进 tap。**
+
+上面几个应用在 GitHub 上的新版本多半是 pre-release（Deep Sleep 1.12.0 起、SkycMedia 全部新版本、Super Download Manager 2.2.6 起、HexoMan 0.7.0 起）。想装那些，去 release 页面手动下：
+
+- <https://github.com/Mofan2020/DeepSleep/releases>
+- <https://github.com/Mofan2020/ncm/releases>
+- <https://github.com/Mofan2020/SuperDownloadManager/releases>
+- <https://github.com/Mofan2020/HexoMan/releases>
+
+这条规则由 `scripts/check_stable_only.py` 守着：它逐个查 cask 指向的版本在 GitHub 上是不是正式发布，pre-release 就报错；仓库的 CI 每次 push 都会跑它。想在本地跑：
+
+```sh
+python3 scripts/check_stable_only.py
+```
 
 ## 签名说明
 

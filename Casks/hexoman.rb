@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 cask "hexoman" do
-  version "0.8.0"
-  sha256 "7076bd2b2d11e703eca938dd7f159e00eff7260604e349eac4e1f8ef5a58f78c"
+  version "0.6.1"
+  sha256 "8e67d3b4b764bd88205140b432d0362df69764ef90347cbef53b6bb6e7eeded1"
 
   url "https://github.com/Mofan2020/HexoMan/releases/download/v#{version}/HexoMan-#{version}-macos.zip"
   name "HexoMan"
@@ -8,9 +10,8 @@ cask "hexoman" do
   homepage "https://github.com/Mofan2020/HexoMan"
 
   livecheck do
-    url "https://github.com/Mofan2020/HexoMan/releases.atom"
-    regex(/HexoMan\s+v?(\d+(?:\.\d+)+)/i)
-    strategy :page_match
+    url :url
+    strategy :github_latest
   end
 
   depends_on arch: :arm64
@@ -28,8 +29,12 @@ cask "hexoman" do
   ]
 
   caveats <<~EOS
-    v0.8.0 is published on GitHub as a pre-release; the newest non-pre-release
-    there is v0.6.1. This cask tracks the pre-release line on purpose.
+    This tap only ever installs a stable release. Newer versions of HexoMan
+    are published as pre-releases on GitHub; install those from the release
+    page if you want them.
+
+    The version written inside the app comes from the upstream package and
+    can lag behind the release number.
 
     The app is ad-hoc signed and not notarised. macOS may ask you to allow it
     in System Settings → Privacy & Security the first time you open it.
