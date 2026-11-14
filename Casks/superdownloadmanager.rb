@@ -1,6 +1,6 @@
 cask "superdownloadmanager" do
-  version "2.2.5"
-  sha256 "c660f388b30498845607c21b52e513df0fce8cf3006ff55be2f0415dcfe78378"
+  version "2.3.1"
+  sha256 "872e4cbb3548575ead084b9a8fe2a3e3a3d739589db66d527e505e77303526b7"
 
   url "https://github.com/Mofan2020/SuperDownloadManager/releases/download/v#{version}/SuperDownloadManager-macOS.zip"
   name "SuperDownloadManager"

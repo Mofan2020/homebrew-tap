@@ -1,13 +1,13 @@
 cask "skycmedia" do
-  version "3.24.3"
+  version "3.25.1"
 
   on_arm do
-    sha256 "741b6171c3582ae9a11b490ee0af919f508da179a0deb695662edb14309c907b"
+    sha256 "959e628b752e50e1ab65ff75496d845be41a8f43715ee8f4fb2b2aeb1968ff21"
 
     url "https://github.com/Mofan2020/ncm/releases/download/v#{version}/SkycMedia-macOS-arm64.dmg"
   end
   on_intel do
-    sha256 "c6899c39518d19b7d7f380df9387439406654ed4ac6081d2287a87f889bf71b1"
+    sha256 "a833a9d71f287bef1bb06bab810a7dafdc118b17bea77077f4ee1665115375d4"
 
     url "https://github.com/Mofan2020/ncm/releases/download/v#{version}/SkycMedia-macOS-x64.dmg"
   end
