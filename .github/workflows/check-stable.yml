@@ -8,7 +8,8 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # brew style 只在 macOS runner 上有现成的 brew，用 ubuntu 的话得自己装。
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -22,6 +23,4 @@ jobs:
         run: python3 scripts/check_stable_only.py
 
       - name: the casks must look right
-        run: |
-          brew install brew/macos/brew-lint
-          brew style Mofan2020/homebrew-tap
+        run: brew style .
