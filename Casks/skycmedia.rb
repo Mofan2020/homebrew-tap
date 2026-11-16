@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 cask "skycmedia" do
-  version "3.5.4"
+  version "3.27.0"
 
   on_arm do
-    sha256 "d3a912da975c4b1672ea6fc4f00994e922c10eb7d201b312f74c4cafa6b55ccd"
+    sha256 "c446eba103dc8560e01b228e01e530eb5f70fa087303921b197e47036b41b031"
 
-    url "https://github.com/Mofan2020/ncm/releases/download/v#{version}/NeteaseMusicDownloader-macOS-arm64.dmg"
+    url "https://github.com/Mofan2020/ncm/releases/download/v#{version}/SkycMedia-macOS-arm64.dmg"
   end
   on_intel do
-    sha256 "eb3ca7f5d376f8d51e152db12c0cb116fe62edf0c61b938e9151cc56817afb49"
+    sha256 "b6b764e9c0959726805eaa20ac4a35cd9691fcc67cc2b1ba758617a18877154d"
 
-    url "https://github.com/Mofan2020/ncm/releases/download/v#{version}/NeteaseMusicDownloader-macOS-x64.dmg"
+    url "https://github.com/Mofan2020/ncm/releases/download/v#{version}/SkycMedia-macOS-x64.dmg"
   end
 
-  name "NeteaseMusicDownloader"
+  name "SkycMedia"
   desc "NetEase Cloud Music client"
   homepage "https://github.com/Mofan2020/ncm"
 
@@ -25,9 +25,9 @@ cask "skycmedia" do
 
   depends_on :macos
 
-  app "NeteaseMusicDownloader.app"
+  app "SkycMedia.app"
 
-  uninstall quit: "com.skyc8266.neteasemusicdownloader"
+  uninstall quit: "com.skyc8266.skycmedia"
 
   caveats <<~EOS
     This tap only ever installs a stable release. Every newer version of

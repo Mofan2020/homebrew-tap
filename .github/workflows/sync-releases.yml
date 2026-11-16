@@ -1,0 +1,83 @@
+name: sync releases
+
+# 这个 tap 跟的是各项目的**最新正式版**。上游发了正式版，cask 就该跟上；
+# 不然 `brew upgrade` 升不上去，用户得手动改版本号和 sha256。
+#
+# 跑的脚本是 scripts/sync_releases.py：它问 GitHub 的 /releases/latest
+# （那个端点本来就不给 draft 和 pre-release），下载资产现算 sha256，
+# 改写 cask 的 version 和 sha256。改不动的（上游改了 app 名字）它会跳过，
+# 留给 scripts/check_app_names.py 去报。
+#
+# 它只开 PR，不直接推 main：cask 是用户装东西的地方，推坏了 brew 就装不上。
+on:
+  schedule:
+    # 每天 6:17 UTC
+    - cron: 17 6 * * *
+  workflow_dispatch:
+  push:
+    # 改脚本本身的时候跑一次，看看它是不是还能跑。
+    paths:
+      - scripts/sync_releases.py
+      - .github/workflows/sync-releases.yml
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  sync:
+    # brew style 只在 macOS runner 上有现成的 brew。
+    runs-on: macos-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@f8d4222eb633e65c2a0157383cf80861fc7fae7f # 2026.09.07.1
+
+      - name: Set up git
+        id: git_setup
+        uses: Homebrew/actions/git-user-config@f8d4222eb633e65c2a0157383cf80861fc7fae7f # 2026.09.07.1
+
+      - name: Update the casks to the latest stable releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/sync_releases.py
+
+      - name: See what changed
+        id: changed
+        run: |
+          if git diff --quiet; then
+            echo "cask 已经是最新，不用开 PR"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git diff
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open a pull request
+        if: steps.changed.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_GIT_COMMITTER_NAME: ${{ steps.git_setup.outputs.name }}
+          HOMEBREW_GIT_COMMITTER_EMAIL: ${{ steps.git_setup.outputs.email }}
+        run: |
+          git config user.name "$HOMEBREW_GIT_COMMITTER_NAME"
+          git config user.email "$HOMEBREW_GIT_COMMITTER_EMAIL"
+          git checkout -b sync/releases
+          git add Casks/
+          git commit -m "chore: cask 跟到各上游的最新正式版"
+          git push --force-with-lease origin sync/releases
+          gh pr create \
+            --title "chore: cask 跟到各上游的最新正式版" \
+            --body "由 scripts/sync_releases.py 自动生成。sha256 是下载资产现算的。" \
+            --base main \
+            --head sync/releases \
+            --label autobump

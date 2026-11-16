@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 cask "deepsleep" do
-  version "1.11.4"
-  sha256 "47f2404fc2ca928a83f0fd71a9eab151297cb68ae17b9a617484938dbd650887"
+  version "1.13.0"
+  sha256 "2e959755730d00a08fb24a21c22e21c75c783613ae58c86f2204c91788f1619d"
 
   url "https://github.com/Mofan2020/DeepSleep/releases/download/v#{version}/DeepSleep.zip"
   name "Deep Sleep"

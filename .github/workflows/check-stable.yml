@@ -22,5 +22,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/check_stable_only.py
 
+      - name: the app names must match the upstream builds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/check_app_names.py
+
+      - name: the sync script must not lose track of what is stable
+        run: python3 scripts/test_sync_releases.py
+
       - name: the casks must look right
         run: brew style .

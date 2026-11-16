@@ -33,7 +33,7 @@ cask "deepsleep"
 | `deepsleep` | Deep Sleep | 睡眠与电源管理，原生 Swift，要求 macOS 26 以上 |
 | `fastets` | FastETS | 易听说（ETS100）作业助手，Apple Silicon 和 Intel 各有独立安装包 |
 | `hexoman` | HexoMan | Hexo 博客管理：站点、文章、构建、配置、Git，要求 macOS 26 以上，仅 Apple Silicon |
-| `skycmedia` | SkycMedia | 网易云音乐的第三方客户端（稳定版那时的应用名是 NeteaseMusicDownloader） |
+| `skycmedia` | SkycMedia | 网易云音乐的第三方客户端 |
 | `superdownloadmanager` | SuperDownloadManager | 多线程下载管理器，仅 Apple Silicon |
 
 FastETS 和 SkycMedia 会在 Apple Silicon 与 Intel 上各取对应的包；剩下三个上游只发了 Apple Silicon 版本，Intel 机器装不了。
@@ -56,6 +56,24 @@ FastETS 和 SkycMedia 会在 Apple Silicon 与 Intel 上各取对应的包；剩
 ```sh
 python3 scripts/check_stable_only.py
 ```
+
+## 自动跟版本
+
+上游发了正式版之后，这个 tap 自己会跟上去：`scripts/sync_releases.py` 问
+GitHub 每个项目的最新正式版（`/releases/latest` 那个端点本来就不给
+draft 和 pre-release），下载资产现算 sha256，改写 cask 的版本号和 sha256。
+
+每天跑一次，有变化就开一个 PR，不会直接推 main。改不动的它会跳过 ——
+比如上游把应用改了名（`app "..."` 和 `uninstall quit:` 也得跟着改，脚本
+猜不出来），那种情况由 `scripts/check_app_names.py` 报出来。
+
+```sh
+python3 scripts/sync_releases.py --check   # 只看要改什么，不动文件
+```
+
+应用名字对不对，由 `scripts/check_app_names.py` 查：它把上游最新正式版的
+macOS 包下下来，解包出 `.app` 的名字，跟 cask 里写的比。CI 每次 push 都会
+跑它。
 
 ## 签名说明
 
