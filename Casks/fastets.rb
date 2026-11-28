@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 cask "fastets" do
-  version "1.0.10"
+  version "1.0.11"
 
   on_arm do
-    sha256 "8f2473441a32f3e38c5aad896d08a611c5a95efd7aa814cd3791c8dabf404750"
+    sha256 "ab966c628a5a590cbeb67914c2438ab7071b36bbacaa4bf74274ef8796f022e4"
 
     url "https://github.com/Mofan2020/FastETS/releases/download/v#{version}/FastETS-macOS-arm64.zip"
   end
   on_intel do
-    sha256 "26cba5df8a6fd02f4d02d023f8a2b38360adb79f39f595d2d76e13e182731549"
+    sha256 "a333ddbe857b4b2c098e3c1368778959c7c789250e5fd525e1527c45371297e0"
 
     url "https://github.com/Mofan2020/FastETS/releases/download/v#{version}/FastETS-macOS-x64.zip"
   end
